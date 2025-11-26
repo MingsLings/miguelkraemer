@@ -1,0 +1,43 @@
+<%- include('../cabecalho.ejs') %>
+
+<header>
+  <h3>Editar Técnica</h3>
+</header>
+
+<div class="content">
+  <form action="/tecnica/edt/ok/<%= tecnica._id %>" method="post">
+    <div class="grid">
+      <div>
+        <label>Nome</label>
+        <input type="text" name="nome" value="<%= tecnica.nome %>" required>
+      </div>
+
+      <div>
+        <label>Usuário(s)</label>
+        <input type="text" name="usuario" value="<%= tecnica.usuario %>" required>
+      </div>
+
+      <div>
+        <label>Complexidade</label>
+        <input type="text" name="complexidade" value="<%= tecnica.complexidade %>" required>
+      </div>
+
+      <div>
+        <label>Capacidades</label>
+        <input type="text" name="capacidades" value="<%= tecnica.capacidades %>" required>
+      </div>
+
+      <div>
+        <label>Descrição</label>
+        <input type="text" name="descricao" value="<%= tecnica.descricao %>" required>
+      </div>
+
+      <footer>
+        <a href="/tecnica/lst" class="btn ghost">Cancelar</a>
+        <button type="submit" class="btn primary">Salvar Alterações</button>
+      </footer>
+    </div>
+  </form>
+</div>
+
+<%- include('../rodape.ejs') %>

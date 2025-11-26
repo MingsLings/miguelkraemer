@@ -1,0 +1,47 @@
+     <%-include('../cabecalho.ejs')%>
+     <header>
+        <h3>Adicionar Novo Feiticeiro</h3>
+      </header>
+      <div class="content">
+        <form id="form-feiticeiro" autocomplete="off" action="/feiticeiro/add/ok" method="post" enctype="multipart/form-data">
+          <div class="grid">
+            <div>
+              <label for="nome">Nome do Feiticeiro</label>
+              <input id="nome" name="nome" type="text" placeholder="Ex: Satoru Gojo" required>
+            </div>
+            <div>
+              <label for="tecnica">Técnica</label>
+              <input id="tecnica" name="tecnica" type="text" placeholder="Ex: Ilimitado" required>
+            </div>
+            <div>
+              <label for="estilo">Estilo</label>
+              <input id="estilo" name="estilo" type="text" placeholder="Ex: Lutador, Combatente, Conjurador" required>
+            </div>
+            <div>
+              <label for="grau">Grau</label>
+              <select id="grau" name="grau" required>
+            <option value="" disabled selected>Selecione uma opção</option>
+            <option>Grau 4</option>
+            <option>Grau 3</option>
+            <option>Grau 2</option>
+            <option>Grau 1</option>
+            <option>Grau Especial</option>
+          </select>
+            </div>
+            <div>
+              <label for="status">Status</label>
+              <input id="status" name="status" type="text" placeholder="Ex: Vivo" required>
+            </div>
+            <div>
+              <label for="foto">Foto</label>
+              <input id="foto" name="foto" type="file">
+            </div>
+    
+          <footer>
+            <a type="button" class="btn ghost" id="btn-cancelar" href="/feiticeiro/lst">Cancelar</a>
+            <button type="submit" class="btn primary">Adicionar Feiticeiro</button>
+          </footer>
+        </form>
+      </div>
+
+      <%-include('../rodape.ejs')%>

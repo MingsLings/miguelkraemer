@@ -1,0 +1,49 @@
+<%- include('../cabecalho.ejs') %>
+
+<header>
+  <h3>Editar Clã</h3>
+</header>
+
+<div class="content">
+  <form action="/cla/edt/ok/<%= cla._id %>" method="post">
+    <div class="grid">
+      <div>
+        <label>Nome</label>
+        <input type="text" name="nome" value="<%= cla.nome %>" required>
+      </div>
+
+      <div>
+        <label>Fundador</label>
+        <input type="text" name="fundador" value="<%= cla.fundador %>" required>
+      </div>
+
+      <div>
+              <label for="influencia">Influência</label>
+              <select id="influencia" name="influencia" required>
+            <option value="" disabled selected>Selecione uma opção</option>
+            <option>Inativo</option>
+            <option>Noviço</option>
+            <option>Relevante</option>
+            <option>Célebre</option>
+          </select>
+      </div>
+
+      <div>
+        <label>Membros</label>
+        <input type="text" name="membros" value="<%= cla.membros %>" required>
+      </div>
+
+      <div>
+        <label>Técnicas</label>
+        <input type="text" name="tecnicas" value="<%= cla.tecnicas %>" required>
+      </div>
+
+      <footer>
+        <a href="/cla/lst" class="btn ghost">Cancelar</a>
+        <button type="submit" class="btn primary">Salvar Alterações</button>
+      </footer>
+    </div>
+  </form>
+</div>
+
+<%- include('../rodape.ejs') %>

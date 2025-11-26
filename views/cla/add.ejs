@@ -1,0 +1,42 @@
+     <%-include('../cabecalho.ejs')%>
+     <header>
+        <h3>Adicionar Novo Clã</h3>
+      </header>
+      <div class="content">
+        <form id="form-cla" autocomplete="off" action="/cla/add/ok" method="post">
+          <div class="grid">
+            <div>
+              <label for="nome">Nome do Clã</label>
+              <input id="nome" name="nome" type="text" placeholder="Ex: Clã Inumaki" required>
+            </div>
+            <div>
+              <label for="fundador">Fundador</label>
+              <input id="fundador" name="fundador" type="text" placeholder="Ex: Roberto Engraçado" required>
+            </div>
+            <div>
+              <label for="influencia">Influência</label>
+              <select id="influencia" name="influencia" required>
+            <option value="" disabled selected>Selecione uma opção</option>
+            <option>Inativo</option>
+            <option>Noviço</option>
+            <option>Relevante</option>
+            <option>Célebre</option>
+          </select>
+            </div>
+            <div>
+              <label for="membros">Membros Notáveis</label>
+              <input id="membros" name="membros" type="text" placeholder="Ex: Toge Inumaki" required>
+            </div>
+            <div>
+              <label for="tecnicas">Técnicas</label>
+              <input id="tecnicas" name="tecnicas" type="text" placeholder="Ex: Fala Amaldiçoada" required>
+            </div>
+    
+          <footer>
+            <a type="button" class="btn ghost" id="btn-cancelar" href="/cla/lst">Cancelar</a>
+            <button type="submit" class="btn primary">Adicionar Clã</button>
+          </footer>
+        </form>
+      </div>
+
+      <%-include('../rodape.ejs')%>

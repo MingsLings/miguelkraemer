@@ -1,0 +1,73 @@
+<%- include('../cabecalho.ejs') %>
+
+<header>
+  <h3>Editar Personagem</h3>
+</header>
+
+<div class="content">
+  <form action="/feiticeiro/edt/ok/<%= feiticeiro._id %>" method="post" enctype="multipart/form-data">
+    <div class="grid">
+      <div>
+        <label>Nome</label>
+        <input type="text" name="nome" value="<%= feiticeiro.nome %>" required>
+      </div>
+
+      <div>
+        <label>Técnica</label>
+        <input type="text" name="tecnica" value="<%= feiticeiro.tecnica %>" required>
+      </div>
+
+      <div>
+        <label>Estilo</label>
+        <input type="text" name="estilo" value="<%= feiticeiro.estilo %>" required>
+      </div>
+
+      <div>
+        <label for="grau">Grau</label>
+          <select id="grau" name="grau" required>
+            <option value="<%= feiticeiro.grau %>" disabled selected>Selecione uma opção</option>
+            <option>Grau 4</option>
+            <option>Grau 3</option>
+            <option>Grau 2</option>
+            <option>Grau 1</option>
+            <option>Grau Especial</option>
+          </select>
+      </div>
+
+      <div>
+        <label>Status</label>
+        <input type="text" name="status" value="<%= feiticeiro.status %>" required>
+      </div>
+
+      <div>
+        <label>Foto</label><br>
+          <img id="preview" src="<%= feiticeiro.foto %>" alt="Prévia da foto" width="150" style="display:block; margin-bottom:10px;">
+          <input name="foto" type="file" accept="image/*" onchange="previewImage(event)">
+      </div>
+
+      <script>
+        function previewImage(event) {
+         const input = event.target;
+         const preview = document.getElementById('preview');
+
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+
+      reader.onload = function(e) {
+        preview.src = e.target.result;
+      };
+
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+      </script>
+
+      <footer>
+        <a href="/feiticeiro/lst" class="btn ghost">Cancelar</a>
+        <button type="submit" class="btn primary">Salvar Alterações</button>
+      </footer>
+    </div>
+  </form>
+</div>
+
+<%- include('../rodape.ejs') %>

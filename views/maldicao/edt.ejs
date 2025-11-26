@@ -1,0 +1,50 @@
+<%- include('../cabecalho.ejs') %>
+
+<header>
+  <h3>Editar Maldição</h3>
+</header>
+
+<div class="content">
+  <form action="/maldicao/edt/ok/<%= maldicao._id %>" method="post">
+    <div class="grid">
+      <div>
+        <label>Nome</label>
+        <input type="text" name="nome" value="<%= maldicao.nome %>" required>
+      </div>
+
+      <div>
+        <label> Técnica </label>
+        <input type="text" name="tecnica" value="<%= maldicao.tecnica %>" required>
+      </div>
+
+      <div>
+        <label> Espécie </label>
+        <input type="text" name="especie" value="<%= maldicao.especie %>" required>
+      </div>
+
+      <div>
+        <label for="grau">Grau</label>
+          <select id="grau" name="grau" required>
+            <option value="" disabled selected>Selecione uma opção</option>
+            <option>Grau 4</option>
+            <option>Grau 3</option>
+            <option>Grau 2</option>
+            <option>Grau 1</option>
+            <option>Grau Especial</option>
+          </select>
+      </div>
+
+      <div>
+        <label>Status</label>
+        <input type="text" name="status" value="<%= maldicao.status %>" required>
+      </div>
+
+      <footer>
+        <a href="/maldicao/lst" class="btn ghost">Cancelar</a>
+        <button type="submit" class="btn primary">Salvar Alterações</button>
+      </footer>
+    </div>
+  </form>
+</div>
+
+<%- include('../rodape.ejs') %>
