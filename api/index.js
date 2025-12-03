@@ -11,7 +11,6 @@ import  Cla from '../models/Cla.js';
 import  Maldicao from '../models/Maldicao.js';
 
 
-
 app.use(express.urlencoded({extended:true}))
 app.set('view engine', 'ejs')
 
