@@ -13,13 +13,14 @@ import  Maldicao from '../models/Maldicao.js';
 
 app.use(express.urlencoded({extended:true}))
 app.set('view engine', 'ejs')
+app.set("views", path.join(process.cwd(), 'views'))
 
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import path from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-app.use(express.static(__dirname + '../public'))
+app.use(express.static(process.cwd() + '/public'))
 
 app.get('/', (req, res) => {
     res.render("index")
