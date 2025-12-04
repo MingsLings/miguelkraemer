@@ -22,14 +22,27 @@ import path from 'path';
 const __filename = fileURLToPath(import.meta.url);
 app.use(express.static(process.cwd() + '/public'))
 
-app.get("/", (req, res) => {
-    res.render("index", {
-        feiticeiros: [],
-        tecnicas: [],
-        clas: [],
-        maldicoes: []
-    });
+app.get("/", async (req, res) => {
+    
+    try {
+        const feiticeiros = await Feiticeiro.find({});
+        const tecnicas = await Tecnica.find({});
+        const clas = await Cla.find({});
+        const maldicoes = await Maldicao.find({});
+
+        res.render("index", {
+            feiticeiros,
+            tecnicas,
+            clas,
+            maldicoes
+        });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Erro ao carregar dados");
+    }
 });
+
 
 app.get('/feiticeiro/lst', async (req, res) => {
     const q = req.query.q || ""; // texto da busca

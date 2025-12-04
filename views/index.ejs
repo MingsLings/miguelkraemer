@@ -59,7 +59,13 @@
 </head>
 <body>
 
-<header>Jujutsu Kaisen — Wiki</header>
+<header>Jujutsu Kaisen</header>
+
+<p>Feiticeiros no backend: <%= JSON.stringify(feiticeiros) %></p>
+<p>Técnicas no backend: <%= JSON.stringify(tecnicas) %></p>
+<p>Clãs no backend: <%= JSON.stringify(clas) %></p>
+<p>Maldições no backend: <%= JSON.stringify(maldicoes) %></p>
+
 
 <div class="container">
     <h2>Feiticeiros</h2>
@@ -89,7 +95,11 @@
         <% }) %>
     </div>
 
-    <h2>Clãs</h2>
+    <h2>Clãs</h2><p>Feiticeiros no backend: <%= JSON.stringify(feiticeiros) %></p>
+<p>Técnicas no backend: <%= JSON.stringify(tecnicas) %></p>
+<p>Clãs no backend: <%= JSON.stringify(clas) %></p>
+<p>Maldições no backend: <%= JSON.stringify(maldicoes) %></p>
+
     <div class="grid">
         <% clas.forEach(cla => { %>
             <div class="card">
