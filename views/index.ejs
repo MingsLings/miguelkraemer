@@ -64,7 +64,7 @@
 <div class="container">
     <h2>Feiticeiros</h2>
     <div class="grid">
-        <% feiticeiro.forEach(feiticeiro => { %>
+        <% feiticeiros.forEach(feiticeiro => { %>
             <div class="card">
                 <img src="<%= feiticeiro.foto %>" alt="<%= feiticeiro.nome %>">
                 <h3><%= feiticeiro.nome %></h3>
@@ -78,7 +78,7 @@
 
     <h2>Técnicas</h2>
     <div class="grid">
-        <% tecnica.forEach(tecnica => { %>
+        <% tecnicas.forEach(tecnica => { %>
             <div class="card">
                 <h3><%= tecnica.nome %></h3>
                 <p><strong>Usuário:</strong> <%= tecnica.usuario %></p>
@@ -91,7 +91,7 @@
 
     <h2>Clãs</h2>
     <div class="grid">
-        <% cla.forEach(cla => { %>
+        <% clas.forEach(cla => { %>
             <div class="card">
                 <h3><%= cla.nome %></h3>
                 <p><strong>Fundador:</strong> <%= cla.fundador %></p>
@@ -104,7 +104,7 @@
 
     <h2>Maldições</h2>
     <div class="grid">
-        <% maldicao.forEach(maldicao => { %>
+        <% maldicoes.forEach(maldicao => { %>
             <div class="card">
                 <h3><%= maldicao.nome %></h3>
                 <p><strong>Técnica:</strong> <%= maldicao.tecnica %></p>
