@@ -22,10 +22,14 @@ import path from 'path';
 const __filename = fileURLToPath(import.meta.url);
 app.use(express.static(process.cwd() + '/public'))
 
-app.get('/', (req, res) => {
-    res.render("index")
-})
-
+app.get("/", (req, res) => {
+    res.render("index", {
+        feiticeiros: [],
+        tecnicas: [],
+        clas: [],
+        maldicoes: []
+    });
+});
 
 app.get('/feiticeiro/lst', async (req, res) => {
     const q = req.query.q || ""; // texto da busca
