@@ -1,31 +1,27 @@
-import { createServer } from 'http';
-
-import express from 'express'
+import express from 'express';
 import multer from 'multer';
-const storage = multer.memoryStorage();
-const upload = multer({ storage });
-const express = require("express");
-const app = express();
-app.use(express.static("public"));
-import  Feiticeiro from '../models/Feiticeiro.js';
-import  Tecnica from '../models/Tecnica.js';
-import  Cla from '../models/Cla.js';
-import  Maldicao from '../models/Maldicao.js';
-
-app.use(express.urlencoded({extended:true}))
-app.set('view engine', 'ejs')
-app.set("views", path.join(process.cwd(), 'views'))
-
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
 import path from 'path';
+import { fileURLToPath } from 'url';
+
+import Feiticeiro from '../models/Feiticeiro.js';
+import Tecnica from '../models/Tecnica.js';
+import Cla from '../models/Cla.js';
+import Maldicao from '../models/Maldicao.js';
 
 const __filename = fileURLToPath(import.meta.url);
-app.use(express.static(process.cwd() + '/public'))
+const __dirname = path.dirname(__filename);
 
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
+
+const app = express();
+
+app.use(express.static(path.join(process.cwd(), 'public')));
+app.use(express.urlencoded({ extended: true }));
+app.set('view engine', 'ejs');
+app.set('views', path.join(process.cwd(), 'views'));
 
 app.get("/", async (req, res) => {
-    
     try {
         const feiticeiros = await Feiticeiro.find({});
         const tecnicas = await Tecnica.find({});
@@ -38,7 +34,6 @@ app.get("/", async (req, res) => {
             clas,
             maldicoes
         });
-
     } catch (err) {
         console.error(err);
         res.status(500).send("Erro ao carregar dados");
@@ -50,7 +45,7 @@ app.get("/senha", (req, res) => {
 });
 
 app.get('/feiticeiro/lst', async (req, res) => {
-    const q = req.query.q || ""; // texto da busca
+    const q = req.query.q || "";
 
     const feiticeiros = await Feiticeiro.find({
         $or: [
@@ -67,24 +62,24 @@ app.get('/feiticeiro/lst', async (req, res) => {
 
 app.post('/feiticeiro/add/ok', upload.single('foto'), async (req, res) => {
     await Feiticeiro.create({
-        nome:req.body.nome,
-        tecnica:req.body.tecnica,
-        estilo:req.body.estilo,
-        grau:req.body.grau,
-        status:req.body.status,
-        foto:req.file.buffer
-    })
-    res.render("feiticeiro/addok" )
-})
+        nome: req.body.nome,
+        tecnica: req.body.tecnica,
+        estilo: req.body.estilo,
+        grau: req.body.grau,
+        status: req.body.status,
+        foto: req.file ? req.file.buffer : undefined
+    });
+    res.render("feiticeiro/addok");
+});
 
 app.get('/feiticeiro/add', (req, res) => {
-    res.render("feiticeiro/add")
-})
+    res.render("feiticeiro/add");
+});
 
 app.get('/feiticeiro/edt/:id', async (req, res) => {
-    const feiticeiro = await Feiticeiro.findById(req.params.id)
-    res.render("feiticeiro/edt", { feiticeiro })
-})
+    const feiticeiro = await Feiticeiro.findById(req.params.id);
+    res.render("feiticeiro/edt", { feiticeiro });
+});
 
 app.post('/feiticeiro/edt/ok/:id', upload.single('foto'), async (req, res) => {
     const updateData = {
@@ -104,15 +99,12 @@ app.post('/feiticeiro/edt/ok/:id', upload.single('foto'), async (req, res) => {
 });
 
 app.get('/feiticeiro/del/:id', async (req, res) => {
-    await Feiticeiro.findByIdAndDelete(req.params.id)
-    res.redirect('/feiticeiro/lst')
-})
-
-///////////////////////////////////////////////
-
+    await Feiticeiro.findByIdAndDelete(req.params.id);
+    res.redirect('/feiticeiro/lst');
+});
 
 app.get('/tecnica/lst', async (req, res) => {
-    const q = req.query.q || ""; // texto da busca
+    const q = req.query.q || "";
 
     const tecnica = await Tecnica.find({
         $or: [
@@ -128,33 +120,31 @@ app.get('/tecnica/lst', async (req, res) => {
 });
 
 app.post('/tecnica/add/ok', async (req, res) => {
-    await Tecnica.create(req.body)
-    res.render("tecnica/addok" )
-})
+    await Tecnica.create(req.body);
+    res.render("tecnica/addok");
+});
 
 app.get('/tecnica/add', (req, res) => {
-    res.render("tecnica/add")
-})
+    res.render("tecnica/add");
+});
 
 app.get('/tecnica/edt/:id', async (req, res) => {
-    const tecnica = await Tecnica.findById(req.params.id)
-    res.render("tecnica/edt", { tecnica })
-})
+    const tecnica = await Tecnica.findById(req.params.id);
+    res.render("tecnica/edt", { tecnica });
+});
 
 app.post('/tecnica/edt/ok/:id', async (req, res) => {
-    await Tecnica.findByIdAndUpdate(req.params.id, req.body)
-    res.redirect('/tecnica/lst')
-})
+    await Tecnica.findByIdAndUpdate(req.params.id, req.body);
+    res.redirect('/tecnica/lst');
+});
 
 app.get('/tecnica/del/:id', async (req, res) => {
-    await Tecnica.findByIdAndDelete(req.params.id)
-    res.redirect('/tecnica/lst')
-})
-
-//////////////////////////////////////////////////
+    await Tecnica.findByIdAndDelete(req.params.id);
+    res.redirect('/tecnica/lst');
+});
 
 app.get('/cla/lst', async (req, res) => {
-    const q = req.query.q || ""; // texto da busca
+    const q = req.query.q || "";
 
     const cla = await Cla.find({
         $or: [
@@ -169,37 +159,34 @@ app.get('/cla/lst', async (req, res) => {
     res.render("cla/lst", { cla, q });
 });
 
-
 app.post('/cla/add/ok', async (req, res) => {
-    await Cla.create(req.body)
-    res.render("cla/addok" )
-})
+    await Cla.create(req.body);
+    res.render("cla/addok");
+});
 
 app.get('/cla/add', (req, res) => {
-    res.render("cla/add")
-})
+    res.render("cla/add");
+});
 
 app.get('/cla/edt/:id', async (req, res) => {
-    const cla = await Cla.findById(req.params.id)
-    res.render("cla/edt", { cla })
-})
+    const cla = await Cla.findById(req.params.id);
+    res.render("cla/edt", { cla });
+});
 
 app.post('/cla/edt/ok/:id', async (req, res) => {
-    await Cla.findByIdAndUpdate(req.params.id, req.body)
-    res.redirect('/cla/lst')
-})
+    await Cla.findByIdAndUpdate(req.params.id, req.body);
+    res.redirect('/cla/lst');
+});
 
 app.get('/cla/del/:id', async (req, res) => {
-    await Cla.findByIdAndDelete(req.params.id)
-    res.redirect('/cla/lst')
-})
-
-///////////////////////////////////////////////
+    await Cla.findByIdAndDelete(req.params.id);
+    res.redirect('/cla/lst');
+});
 
 app.get('/maldicao/lst', async (req, res) => {
-  const q = req.query.q || ""; // texto da busca
-  
-  const maldicao = await Maldicao.find({
+    const q = req.query.q || "";
+
+    const maldicao = await Maldicao.find({
         $or: [
             { nome: { $regex: q, $options: "i" } },
             { tecnica: { $regex: q, $options: "i" } },
@@ -207,35 +194,33 @@ app.get('/maldicao/lst', async (req, res) => {
             { grau: { $regex: q, $options: "i" } },
             { status: { $regex: q, $options: "i" } }
         ]
-    })
+    });
 
-  res.render("maldicao/lst", { maldicao, q });
+    res.render("maldicao/lst", { maldicao, q });
 });
 
-
 app.post('/maldicao/add/ok', async (req, res) => {
-    await Maldicao.create(req.body)
-    res.render("maldicao/addok" )
-})
+    await Maldicao.create(req.body);
+    res.render("maldicao/addok");
+});
 
 app.get('/maldicao/add', (req, res) => {
-    res.render("maldicao/add")
-})
+    res.render("maldicao/add");
+});
 
 app.get('/maldicao/edt/:id', async (req, res) => {
-    const maldicao = await Maldicao.findById(req.params.id)
-    res.render("maldicao/edt", { maldicao })
-})
+    const maldicao = await Maldicao.findById(req.params.id);
+    res.render("maldicao/edt", { maldicao });
+});
 
 app.post('/maldicao/edt/ok/:id', async (req, res) => {
-    await Maldicao.findByIdAndUpdate(req.params.id, req.body)
-    res.redirect('/maldicao/lst')
-})
+    await Maldicao.findByIdAndUpdate(req.params.id, req.body);
+    res.redirect('/maldicao/lst');
+});
 
 app.get('/maldicao/del/:id', async (req, res) => {
-    await Maldicao.findByIdAndDelete(req.params.id)
-    res.redirect('/maldicao/lst')
-})
+    await Maldicao.findByIdAndDelete(req.params.id);
+    res.redirect('/maldicao/lst');
+});
 
-
-app.listen(3011)
+app.listen(3011);
