@@ -21,16 +21,16 @@
             font-family: Arial, sans-serif;
         }
 
-        .eyes-bg {
+        .eyes-bg { 
     position: fixed;
     inset: 0;
-    background: url("/images/oio.jpg");
-    background-size: 220px;
-    background-repeat: repeat;
-    opacity: 0.12;
-    animation: moveEyes 25s linear infinite;
+    background-image: url('/images/oio.jpg');
+    background-size: 200px 200px;
+    opacity: 0.15;
+    animation: moveEyes 30s linear infinite;
     z-index: -1;
 }
+
 
 @keyframes moveEyes {
     from { background-position: 0 0; }
@@ -131,7 +131,7 @@
         <p>Digite a senha amaldiçoada para entrar...</p>
 
         <input id="senha" type="password" placeholder="••••••••">
-        <button onclick="verificarSenha()">Entrar</button>
+        <button onclick="verificarSenha()" id="btn-senha">Entrar</button>
 
         <div class="error" id="error">Senha incorreta... algo está observando você.</div>
     </div>
@@ -144,7 +144,6 @@
         const senha = document.getElementById("senha").value
         const error = document.getElementById("error")
         const page = document.getElementById("page")
-        const sound = document.getElementById("errorSound")
 
         // ALTERE A SENHA AQUI
         const senhaCorreta = "bolinhadegolf"
@@ -154,10 +153,6 @@
         } else {
 
             error.style.display = "block"
-
-            // SOM
-            sound.currentTime = 0
-            sound.play()
 
             // TREMOR
             page.classList.add("shake")
@@ -171,19 +166,40 @@
 
 </script>
 
-<audio id="music" loop>
-  <source src="/sounds/musgamagabra.mp3" type="audio/mpeg">
-</audio>
+<audio id="erro-som" src="/sounds/musgamagabra.mp3"></audio>
 
 <script>
-  document.addEventListener("click", function () {
-      const music = document.getElementById("music");
-      if (music.paused) {
-          music.volume = 0.2;
-          music.play();
+  const som = document.getElementById("erro-som");
+
+  function tocarErro() {
+    if (som) {
+      som.currentTime = 0;
+      som.play();
+    }
+  }
+
+  function tremerTela() {
+    document.body.classList.add("shake");
+    setTimeout(() => {
+      document.body.classList.remove("shake");
+    }, 400);
+  }
+
+  // exemplo: quando clicar no botão de confirmar senha
+  const botao = document.getElementById("btn-senha");
+
+  if (botao) {
+    botao.addEventListener("click", function() {
+      const senha = document.getElementById("senha").value;
+
+      if (senha !== "1234") { // sua senha aqui
+        tocarErro();
+        tremerTela();
       }
-  }, { once: true });
+    });
+  }
 </script>
+
 
 </body>
 </html>

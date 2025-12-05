@@ -45,6 +45,14 @@ app.get("/", async (req, res) => {
 });
 
 app.get("/senha", (req, res) => {
+    
+    const som = document.getElementById("erro-som");
+
+function tocarErro() {
+    som.currentTime = 0;
+    som.play();
+}
+
     res.render("senha");
 });
 
