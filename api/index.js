@@ -22,6 +22,7 @@ import path from 'path';
 const __filename = fileURLToPath(import.meta.url);
 app.use(express.static(process.cwd() + '/public'))
 
+
 app.get("/", async (req, res) => {
     
     try {

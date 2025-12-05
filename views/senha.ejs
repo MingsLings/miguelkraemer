@@ -22,19 +22,21 @@
         }
 
         .eyes-bg {
-            position: fixed;
-            inset: 0;
-            background: url("../images/oio.jpg");
-            background-size: cover;       /* ou contain / 300px etc */
-            background-repeat: repeat;    /* ou no-repeat */
-            opacity: 0.15;
-            animation: moveEyes 30s linear infinite;
-        }
+    position: fixed;
+    inset: 0;
+    background: url("/images/oio.jpg");
+    background-size: 220px;
+    background-repeat: repeat;
+    opacity: 0.12;
+    animation: moveEyes 25s linear infinite;
+    z-index: -1;
+}
 
-        @keyframes moveEyes {
-            from { background-position: 0 0; }
-            to { background-position: -1000px 1000px; }
-        }
+@keyframes moveEyes {
+    from { background-position: 0 0; }
+    to { background-position: 1000px 1000px; }
+}
+
 
         .container {
             height: 100vh;
@@ -168,17 +170,21 @@
 
 </script>
 
+<audio id="music" loop>
+  <source src="/sounds/musgamagabra.mp3" type="audio/mpeg">
+</audio>
+
 <script>
-   document.addEventListener("click", function() {
-      const music = document.getElementById("music")
-      music.volume = 0.5
-      music.play()
-   }, { once: true })
+  document.addEventListener("click", function () {
+      const music = document.getElementById("music");
+      if (music.paused) {
+          music.volume = 0.2;
+          music.play();
+      }
+  }, { once: true });
 </script>
 
-    <audio id="music" autoplay loop>
-        <source src="../sounds/musgamagabra.mp3" type="audio/mpeg">
-    </audio>
+
 
     
 
