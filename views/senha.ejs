@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Acesso Proibido</title>
+
+    <style>
+        body {
+            background: radial-gradient(circle, #000 30%, #200 100%);
+            color: #f5f5f5;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .box {
+            background: #0b0b0b;
+            padding: 40px;
+            border-radius: 12px;
+            border: 2px solid #c62828;
+            box-shadow: 0 0 20px #ff000040;
+            text-align: center;
+            width: 380px;
+        }
+
+        h1 {
+            color: #ff2a2a;
+            margin-bottom: 5px;
+            letter-spacing: 2px;
+        }
+
+        p {
+            font-size: 14px;
+            color: #aaa;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            background: #111;
+            color: red;
+            font-size: 16px;
+            outline: none;
+            border: 1px solid #333;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 18px;
+            border-radius: 8px;
+            border: none;
+            background: #c62828;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background: #ff4444;
+            transform: scale(1.05);
+        }
+
+        .error {
+            margin-top: 15px;
+            color: #ff3b3b;
+            font-size: 13px;
+            display: none;
+        }
+
+        .kanji {
+            font-size: 52px;
+            color: #ff0000;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="box">
+        <div class="kanji">呪</div>
+        <h1>ACESSO RESTRITO</h1>
+        <p>Digite a senha amaldiçoada para entrar…</p>
+
+        <input id="senha" type="password" placeholder="••••••••">
+        <button onclick="verificarSenha()">Entrar</button>
+
+        <div class="error" id="error">Senha incorreta. Você não é digno.</div>
+    </div>
+
+    <script>
+        function verificarSenha() {
+            const senha = document.getElementById("senha").value;
+            const error = document.getElementById("error");
+
+            // Troque a senha aqui
+            const senhaCorreta = "bolinhadegolf";
+
+            if (senha === senhaCorreta) {
+                window.location.href = "/feiticeiro/lst";
+            } else {
+                error.style.display = "block";
+            }
+        }
+    </script>
+
+</body>
+</html>

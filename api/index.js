@@ -43,6 +43,9 @@ app.get("/", async (req, res) => {
     }
 });
 
+app.get("/senha", (req, res) => {
+    res.render("senha");
+});
 
 app.get('/feiticeiro/lst', async (req, res) => {
     const q = req.query.q || ""; // texto da busca
