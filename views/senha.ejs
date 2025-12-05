@@ -184,12 +184,55 @@
   if (!musicaAutorizada) return;
   if (!somMaldito) return;
 
-  try {
-    somMaldito.currentTime = 0;
-    somMaldito.volume = 1.0; // pode ajustar se quiser mais baixo
-    somMaldito.play().catch(()=>{});
-  } catch(e) {}
-        }
+  const AudioContext = window.AudioContext || window.webkitAudioContext;
+  const audioCtx = new AudioContext();
+
+  const fonte = audioCtx.createMediaElementSource(somMaldito);
+
+  // === DISTORÇÃO ===
+  const distorcer = audioCtx.createWaveShaper();
+  function makeDistortionCurve(amount) {
+    let n_samples = 44100,
+        curve = new Float32Array(n_samples),
+        deg = Math.PI / 180;
+    for (let i = 0; i < n_samples; ++i) {
+      let x = i * 2 / n_samples - 1;
+      curve[i] = (3 + amount) * x * 20 * deg / (Math.PI + amount * Math.abs(x));
+    }
+    return curve;
+  }
+  distorcer.curve = makeDistortionCurve(800);
+  distorcer.oversample = "4x";
+
+  // === ECO ===
+  const delay = audioCtx.createDelay();
+  delay.delayTime.value = 0.45;
+
+  const feedback = audioCtx.createGain();
+  feedback.gain.value = 0.6;
+
+  delay.connect(feedback);
+  feedback.connect(delay);
+
+  // === FILTRO SOMBRIO ===
+  const filtro = audioCtx.createBiquadFilter();
+  filtro.type = "bandpass";
+  filtro.frequency.value = 1200;
+  filtro.Q.value = 1;
+
+  fonte
+    .connect(distorcer)
+    .connect(filtro)
+    .connect(delay)
+    .connect(audioCtx.destination);
+
+  fonte.connect(audioCtx.destination); // som original junto
+
+  somMaldito.currentTime = 0;
+  somMaldito.volume = 1;
+  somMaldito.play();
+}
+
 
 
     function efeitoTresErros() {
