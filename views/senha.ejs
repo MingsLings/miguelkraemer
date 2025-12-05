@@ -24,9 +24,13 @@
         .eyes-bg {
             position: fixed;
             inset: 0;
-            background: url("https://i.imgur.com/8yKQFvU.png");
+            background-image: url("/images/oio.jpg");
+            background-size: 300px;
+            background-repeat: repeat;
+            background-position: center;
             opacity: 0.15;
-            animation: moveEyes 30s linear infinite;
+            animation: moveEyes 25s linear infinite;
+            filter: blur(1px) contrast(150%);
         }
 
         @keyframes moveEyes {
