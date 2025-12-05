@@ -24,12 +24,11 @@
         .eyes-bg {
             position: fixed;
             inset: 0;
-            background-image: url("/images/oio.jpg");
-            background-size: 300px;
-            background-repeat: repeat;
-            background-position: center;
+            background: url("/images/oio.jpg");
+            background-size: cover;       /* ou contain / 300px etc */
+            background-repeat: repeat;    /* ou no-repeat */
             opacity: 0.15;
-            animation: moveEyes 25s linear infinite;
+            animation: moveEyes 30s linear infinite;
         }
 
         @keyframes moveEyes {
