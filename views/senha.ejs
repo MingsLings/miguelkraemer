@@ -131,6 +131,11 @@
     <source src="/sounds/erro-short.mp3" type="audio/mpeg">
   </audio>
 
+  <!-- som especial após 3 erros -->
+<audio id="som-maldito" preload="auto">
+  <source src="/sounds/sommaldito.mp3" type="audio/mpeg">
+</audio>
+
   <script>
     // --- CONFIGURAÇÃO ---
     const SENHA_CORRETA = "bolinhadegolf"; // altere aqui para sua senha
@@ -142,6 +147,7 @@
     const errorBox = document.getElementById("error");
     const music = document.getElementById("music");
     const erroSom = document.getElementById("erro-som");
+    const somMaldito = document.getElementById("som-maldito");
     let tentativas = 0;
     let musicaAutorizada = false;
 
@@ -174,9 +180,22 @@
       setTimeout(()=>document.body.classList.remove("shake"), 450);
     }
 
+        function tocarMaldito() {
+  if (!musicaAutorizada) return;
+  if (!somMaldito) return;
+
+  try {
+    somMaldito.currentTime = 0;
+    somMaldito.volume = 1.0; // pode ajustar se quiser mais baixo
+    somMaldito.play().catch(()=>{});
+  } catch(e) {}
+        }
+
+
     function efeitoTresErros() {
       // flash vermelho e redirecionamento opcional, fique à vontade para editar
       document.body.classList.add("flash-red");
+      tocarMaldito();
       setTimeout(()=>document.body.classList.remove("flash-red"), 900);
       // aqui você poderia, por exemplo, mostrar uma imagem grande:
       // window.location.href = '/maldicao/lst' // exemplo de redirecionamento
