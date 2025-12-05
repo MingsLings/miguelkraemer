@@ -111,6 +111,7 @@
             animation: shake 0.4s;
         }
     </style>
+
 </head>
 
 <body>
@@ -131,11 +132,6 @@
     </div>
 
 </div>
-
-<!-- SOM DO ERRO -->
-<audio id="errorSound">
-    <source src="https://cdn.pixabay.com/audio/2022/03/03/audio_9b197da434.mp3" type="audio/mpeg">
-</audio>
 
 <script>
 
@@ -169,6 +165,34 @@
     }
 
 </script>
+
+    <audio id="music" autoplay loop>
+        <source src="/sounds/musgamagabra.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+     document.addEventListener("click", function () {
+      let vol = 0
+const music = document.getElementById("music")
+
+music.volume = 0
+
+let fadeIn = setInterval(() => {
+    if (vol < 0.3) {
+       vol += 0.01
+       music.volume = vol
+    } else {
+       clearInterval(fadeIn)
+    }
+}, 200)
+      music.play()
+      }, { once: true })
+    </script>
+
+    <!-- SOM DO ERRO -->
+    <audio id="errorSound">
+        <source src="" type="audio/mpeg">
+    </audio>
 
 </body>
 </html>
