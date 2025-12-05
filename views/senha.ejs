@@ -1,205 +1,221 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>Acesso Amaldiçoado</title>
+  <meta charset="utf-8" />
+  <title>Acesso Amaldiçoado</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
 
-    <style>
-        @keyframes shake {
-            0% { transform: translate(0, 0); }
-            20% { transform: translate(-10px, 5px); }
-            40% { transform: translate(10px, -5px); }
-            60% { transform: translate(-8px, 5px); }
-            80% { transform: translate(8px, -5px); }
-            100% { transform: translate(0, 0); }
-        }
+  <style>
+    /* fundo e olhos */
+    .eyes-bg {
+      position: fixed;
+      inset: 0;
+      background-image: url('/images/oio.jpg');
+      background-size: 220px 220px;
+      background-repeat: repeat;
+      opacity: 0.12;
+      animation: moveEyes 25s linear infinite;
+      z-index: 0;
+      filter: contrast(120%) saturate(80%);
+    }
 
-        body {
-            margin: 0;
-            background: #000;
-            overflow: hidden;
-            font-family: Arial, sans-serif;
-        }
+    @keyframes moveEyes {
+      from { background-position: 0 0; }
+      to   { background-position: 1000px 1000px; }
+    }
 
-        .eyes-bg { 
-    position: fixed;
-    inset: 0;
-    background-image: url('/images/oio.jpg');
-    background-size: 200px 200px;
-    opacity: 0.15;
-    animation: moveEyes 30s linear infinite;
-    z-index: -1;
-}
+    /* layout do container */
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(180deg, #070707 0%, #0f0606 100%);
+      color: #eee;
+      font-family: "Arial", sans-serif;
+      overflow-x: hidden;
+    }
 
+    .box {
+      position: relative;
+      z-index: 2;
+      width: 380px;
+      background: rgba(10,10,10,0.9);
+      border: 2px solid #8b1111;
+      border-radius: 12px;
+      padding: 28px;
+      box-shadow: 0 0 30px #6b0000;
+      text-align: center;
+    }
 
-@keyframes moveEyes {
-    from { background-position: 0 0; }
-    to { background-position: 1000px 1000px; }
-}
+    .kanji { font-size: 56px; color: #e53935; margin-bottom: 6px; }
+    h1 { color: #ff6b6b; margin: 0 0 6px 0; letter-spacing: 2px; }
+    p.lead { color: #bdbdbd; margin-top: 6px; font-size: 13px; }
 
+    input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      margin-top: 16px;
+      border-radius: 8px;
+      border: 1px solid #333;
+      background: #0f0f0f;
+      color: #ff8a8a;
+      font-size: 16px;
+      outline: none;
+    }
 
-        .container {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2;
-            position: relative;
-        }
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 14px;
+      border-radius: 8px;
+      border: none;
+      background: #c62828;
+      color: #fff;
+      font-size: 15px;
+      cursor: pointer;
+    }
 
-        .box {
-            background: #0b0b0b;
-            padding: 40px;
-            border-radius: 12px;
-            border: 2px solid #c62828;
-            box-shadow: 0 0 25px red;
-            text-align: center;
-            width: 380px;
-        }
+    .error {
+      color: #ff7b7b;
+      margin-top: 12px;
+      display: none;
+      font-size: 14px;
+    }
 
-        .kanji {
-            font-size: 60px;
-            color: red;
-        }
+    /* tremor */
+    @keyframes shake {
+      0% { transform: translate(0); }
+      20% { transform: translate(-10px, 0); }
+      40% { transform: translate(10px, 0); }
+      60% { transform: translate(-8px, 0); }
+      80% { transform: translate(8px, 0); }
+      100% { transform: translate(0); }
+    }
+    .shake { animation: shake 0.45s; }
 
-        h1 {
-            color: #ff2a2a;
-            margin-bottom: 8px;
-            letter-spacing: 3px;
-        }
-
-        p {
-            font-size: 13px;
-            color: #aaa;
-            margin-bottom: 20px;
-        }
-
-        input {
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            border: none;
-            background: #111;
-            color: red;
-            font-size: 16px;
-            outline: none;
-            border: 1px solid #333;
-        }
-
-        button {
-            width: 100%;
-            padding: 12px;
-            margin-top: 18px;
-            border-radius: 8px;
-            border: none;
-            background: #c62828;
-            color: white;
-            font-size: 15px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        button:hover {
-            background: #ff4444;
-            transform: scale(1.05);
-        }
-
-        .error {
-            margin-top: 15px;
-            color: #ff3b3b;
-            font-size: 13px;
-            display: none;
-        }
-
-        .shake {
-            animation: shake 0.4s;
-        }
-    </style>
-
+    /* efeito extra quando 3 erros */
+    .flash-red {
+      animation: flash 0.9s;
+    }
+    @keyframes flash {
+      0% { background: rgba(255,0,0,0.0); }
+      25% { background: rgba(255,0,0,0.25); }
+      50% { background: rgba(255,0,0,0.5); }
+      75% { background: rgba(255,0,0,0.25); }
+      100% { background: rgba(255,0,0,0.0); }
+    }
+  </style>
 </head>
-
 <body>
 
-<div class="eyes-bg"></div>
-<img src="/images/oio.jpg" width="200">
+  <!-- OLHOS NO FUNDO -->
+  <div class="eyes-bg" aria-hidden="true"></div>
 
-<div class="container" id="page">
+  <!-- CAIXA PRINCIPAL -->
+  <div class="box" role="main" aria-label="Área de Login">
+    <div class="kanji">呪</div>
+    <h1>ACESSO RESTRITO</h1>
+    <p class="lead">Digite a senha amaldiçoada para entrar...</p>
 
-    <div class="box">
-        <div class="kanji">呪</div>
-        <h1>ACESSO RESTRITO</h1>
-        <p>Digite a senha amaldiçoada para entrar...</p>
+    <input id="senha" type="password" placeholder="Senha">
+    <button id="btn-senha">Entrar</button>
 
-        <input id="senha" type="password" placeholder="••••••••">
-        <button onclick="verificarSenha()" id="btn-senha">Entrar</button>
+    <div id="error" class="error">Senha incorreta... algo está observando você.</div>
+  </div>
 
-        <div class="error" id="error">Senha incorreta... algo está observando você.</div>
-    </div>
+  <!-- ÁUDIO: sua música e som de erro (opcional) -->
+  <!-- música ambiente (loop) -->
+  <audio id="music" loop preload="auto">
+    <source src="/sounds/musgamagabra.mp3" type="audio/mpeg">
+  </audio>
 
-</div>
+  <!-- som de erro (curto) - se quiser usar outro arquivo coloque em /public/sounds -->
+  <audio id="erro-som" preload="auto">
+    <source src="/sounds/erro-short.mp3" type="audio/mpeg">
+  </audio>
 
-<script>
+  <script>
+    // --- CONFIGURAÇÃO ---
+    const SENHA_CORRETA = "bolinhadegolf"; // altere aqui para sua senha
+    const TENTATIVAS_MAX = 3;
 
-    function verificarSenha() {
-        const senha = document.getElementById("senha").value
-        const error = document.getElementById("error")
-        const page = document.getElementById("page")
+    // --- ELEMENTOS ---
+    const inputSenha = document.getElementById("senha");
+    const btn = document.getElementById("btn-senha");
+    const errorBox = document.getElementById("error");
+    const music = document.getElementById("music");
+    const erroSom = document.getElementById("erro-som");
+    let tentativas = 0;
+    let musicaAutorizada = false;
 
-        // ALTERE A SENHA AQUI
-        const senhaCorreta = "bolinhadegolf"
+    // Ao primeiro clique do usuário na página, autorizamos a música ambiente (política dos navegadores)
+    document.addEventListener("click", function autorizaAudio() {
+      if (!musicaAutorizada) {
+        try {
+          music.volume = 0.12;
+          music.play().catch(()=>{/* autoplay pode falhar, tudo bem */});
+        } catch(e) { /* ignore */ }
+        musicaAutorizada = true;
+      }
+      // remover o listener após a primeira interação
+      document.removeEventListener("click", autorizaAudio);
+    }, { once: true });
 
-        if (senha === senhaCorreta) {
-            window.location.href = "/feiticeiro/lst"
-        } else {
-
-            error.style.display = "block"
-
-            // TREMOR
-            page.classList.add("shake")
-
-            setTimeout(() => {
-                page.classList.remove("shake")
-            }, 400)
-
-        }
+    // função que toca o som de erro (só tocará se o usuário já teve alguma interação)
+    function tocarErro() {
+      if (!musicaAutorizada) return; // evita erro se o usuário nunca clicou
+      if (!erroSom) return;
+      try {
+        erroSom.currentTime = 0;
+        erroSom.volume = 0.8;
+        erroSom.play().catch(()=>{/* ignore */});
+      } catch(e) {}
     }
 
-</script>
-
-<audio id="erro-som" src="/sounds/musgamagabra.mp3"></audio>
-
-<script>
-  const som = document.getElementById("erro-som");
-
-  function tocarErro() {
-    if (som) {
-      som.currentTime = 0;
-      som.play();
+    function tremerTela() {
+      document.body.classList.add("shake");
+      setTimeout(()=>document.body.classList.remove("shake"), 450);
     }
-  }
 
-  function tremerTela() {
-    document.body.classList.add("shake");
-    setTimeout(() => {
-      document.body.classList.remove("shake");
-    }, 400);
-  }
+    function efeitoTresErros() {
+      // flash vermelho e redirecionamento opcional, fique à vontade para editar
+      document.body.classList.add("flash-red");
+      setTimeout(()=>document.body.classList.remove("flash-red"), 900);
+      // aqui você poderia, por exemplo, mostrar uma imagem grande:
+      // window.location.href = '/maldicao/lst' // exemplo de redirecionamento
+    }
 
-  // exemplo: quando clicar no botão de confirmar senha
-  const botao = document.getElementById("btn-senha");
+    // lógica ao clicar no botão
+    btn.addEventListener("click", function() {
+      const valor = inputSenha.value ?? "";
 
-  if (botao) {
-    botao.addEventListener("click", function() {
-      const senha = document.getElementById("senha").value;
+      if (valor === SENHA_CORRETA) {
+        // sucesso: redireciona para a área administrativa
+        window.location.href = "/feiticeiro/lst";
+        return;
+      }
 
-      if (senha !== "1234") { // sua senha aqui
-        tocarErro();
-        tremerTela();
+      // senha incorreta
+      tentativas++;
+      errorBox.style.display = "block";
+      // tocar som de erro e tremer
+      tocarErro();
+      tremerTela();
+
+      if (tentativas >= TENTATIVAS_MAX) {
+        efeitoTresErros();
+        // opcional: reset contador ou bloqueio por X segundos
+        tentativas = 0;
       }
     });
-  }
-</script>
 
-
+    // permitir pressionar Enter dentro do input
+    inputSenha.addEventListener("keydown", function(e) {
+      if (e.key === "Enter") {
+        btn.click();
+      }
+    });
+  </script>
 </body>
 </html>
