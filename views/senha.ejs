@@ -2,18 +2,45 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Acesso Proibido</title>
+    <title>Acesso Amaldiçoado</title>
 
     <style>
+        @keyframes shake {
+            0% { transform: translate(0, 0); }
+            20% { transform: translate(-10px, 5px); }
+            40% { transform: translate(10px, -5px); }
+            60% { transform: translate(-8px, 5px); }
+            80% { transform: translate(8px, -5px); }
+            100% { transform: translate(0, 0); }
+        }
+
         body {
-            background: radial-gradient(circle, #000 30%, #200 100%);
-            color: #f5f5f5;
             margin: 0;
-            font-family: 'Arial', sans-serif;
+            background: #000;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+
+        .eyes-bg {
+            position: fixed;
+            inset: 0;
+            background: url("https://i.imgur.com/8yKQFvU.png");
+            opacity: 0.15;
+            animation: moveEyes 30s linear infinite;
+        }
+
+        @keyframes moveEyes {
+            from { background-position: 0 0; }
+            to { background-position: -1000px 1000px; }
+        }
+
+        .container {
+            height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            z-index: 2;
+            position: relative;
         }
 
         .box {
@@ -21,19 +48,24 @@
             padding: 40px;
             border-radius: 12px;
             border: 2px solid #c62828;
-            box-shadow: 0 0 20px #ff000040;
+            box-shadow: 0 0 25px red;
             text-align: center;
             width: 380px;
         }
 
+        .kanji {
+            font-size: 60px;
+            color: red;
+        }
+
         h1 {
             color: #ff2a2a;
-            margin-bottom: 5px;
-            letter-spacing: 2px;
+            margin-bottom: 8px;
+            letter-spacing: 3px;
         }
 
         p {
-            font-size: 14px;
+            font-size: 13px;
             color: #aaa;
             margin-bottom: 20px;
         }
@@ -75,42 +107,68 @@
             display: none;
         }
 
-        .kanji {
-            font-size: 52px;
-            color: #ff0000;
-            margin-bottom: 10px;
+        .shake {
+            animation: shake 0.4s;
         }
     </style>
 </head>
 
 <body>
 
+<div class="eyes-bg"></div>
+
+<div class="container" id="page">
+
     <div class="box">
         <div class="kanji">呪</div>
         <h1>ACESSO RESTRITO</h1>
-        <p>Digite a senha amaldiçoada para entrar…</p>
+        <p>Digite a senha amaldiçoada para entrar...</p>
 
         <input id="senha" type="password" placeholder="••••••••">
         <button onclick="verificarSenha()">Entrar</button>
 
-        <div class="error" id="error">Senha incorreta. Você não é digno.</div>
+        <div class="error" id="error">Senha incorreta... algo está observando você.</div>
     </div>
 
-    <script>
-        function verificarSenha() {
-            const senha = document.getElementById("senha").value;
-            const error = document.getElementById("error");
+</div>
 
-            // Troque a senha aqui
-            const senhaCorreta = "bolinhadegolf";
+<!-- SOM DO ERRO -->
+<audio id="errorSound">
+    <source src="https://cdn.pixabay.com/audio/2022/03/03/audio_9b197da434.mp3" type="audio/mpeg">
+</audio>
 
-            if (senha === senhaCorreta) {
-                window.location.href = "/feiticeiro/lst";
-            } else {
-                error.style.display = "block";
-            }
+<script>
+
+    function verificarSenha() {
+        const senha = document.getElementById("senha").value
+        const error = document.getElementById("error")
+        const page = document.getElementById("page")
+        const sound = document.getElementById("errorSound")
+
+        // ALTERE A SENHA AQUI
+        const senhaCorreta = "bolinhadegolf"
+
+        if (senha === senhaCorreta) {
+            window.location.href = "/feiticeiro/lst"
+        } else {
+
+            error.style.display = "block"
+
+            // SOM
+            sound.currentTime = 0
+            sound.play()
+
+            // TREMOR
+            page.classList.add("shake")
+
+            setTimeout(() => {
+                page.classList.remove("shake")
+            }, 400)
+
         }
-    </script>
+    }
+
+</script>
 
 </body>
 </html>
