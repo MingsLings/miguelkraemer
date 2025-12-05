@@ -26,20 +26,23 @@
 
     /* layout do container */
     body {
-      margin: 0;
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(180deg, #070707 0%, #0f0606 100%);
-      color: #eee;
-      font-family: "Arial", sans-serif;
-      overflow-x: hidden;
-    }
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #070707 0%, #0f0606 100%);
+  color: #eee;
+  font-family: "Arial", sans-serif;
+  overflow-x: hidden;
+}
+
 
     .box {
       position: relative;
       z-index: 2;
-      width: 380px;
+      width: 90%;
+      max-width: 380px;
       background: rgba(10,10,10,0.9);
       border: 2px solid #8b1111;
       border-radius: 12px;
